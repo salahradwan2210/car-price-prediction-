@@ -3,7 +3,6 @@
 MLOps pipeline for predicting car prices using Mage and FastAPI.
 
 ## Project Overview
-![Pipeline Structure](Screenshot%202025-02-09%20230230.png)
 
 The project implements a complete MLOps pipeline for car price prediction using Mage.ai, a modern data pipeline tool that makes it easy to orchestrate, transform and analyze data.
 
@@ -15,74 +14,90 @@ The project implements a complete MLOps pipeline for car price prediction using 
 - **Version Control**: Git integration for code versioning
 - **Extensible**: Easy to integrate with other tools and services
 
-### Pipeline Components
-1. **Data Loading** (`car_price_data_loader.py`):
-   - Loads raw car data from CSV
-   - Handles data validation and cleaning
-   - Prepares data for feature engineering
+## Quick Start Guide
 
-2. **Feature Engineering** (`car_price_feature_engineering.py`):
-   - Transforms raw features into model-ready format
-   - Handles categorical encoding
-   - Performs feature scaling and normalization
-
-3. **Model Training** (`car_price_model_trainer.py`):
-   - Trains Random Forest model
-   - Performs cross-validation
-   - Saves model metrics and artifacts
-
-4. **Model Deployment** (`car_price_model_deployment.py`):
-   - Deploys model with FastAPI
-   - Provides REST API endpoints
-   - Includes web interface for predictions
-
-## Web Interface
-![Web Interface](Screenshot%202025-02-09%20055937.png)
-
-## Features
-- Data ingestion and preprocessing
-- Feature engineering
-- Model training with Random Forest
-- Model deployment with FastAPI
-- CI/CD pipeline with GitHub Actions
-- Containerization with Docker
-
-## Setup and Installation
-1. Clone the repository
+### 1. Setup Environment
 ```bash
-git clone https://github.com/salahradwan/car_price_prediction.git
-cd car_price_prediction
-```
+# Clone the repository
+git clone https://github.com/salahradwan2210/car-price-prediction-.git
+cd car-price-prediction-
 
-2. Install dependencies
-```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate
+# On Linux/Mac:
+source venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-3. Run locally
-```bash
-python car_price_prediction/transformers/car_price_model_deployment.py
-```
+### 2. Data Preparation
+1. Download the dataset from Kaggle: [Used Cars Dataset](https://www.kaggle.com/datasets/austinreese/craigslist-carstrucks-data)
+2. Rename the downloaded file to `Car_Price.csv`
+3. Place it in the `raw_data` directory
 
-4. Access the API
-- Web UI: http://localhost:8001
-- API Endpoint: http://localhost:8001/predict
-
-## Project Structure
+### 3. Project Structure
 ```
 car_price_prediction/
-├── models/                  # Trained models
-├── transformers/           # Mage transformers
-├── pipelines/             # Data pipelines
-├── api/                   # FastAPI application
-├── tests/                 # Unit tests
-├── Dockerfile             # Docker configuration
-├── requirements.txt       # Python dependencies
-└── README.md             # Project documentation
+├── raw_data/              # Place Car_Price.csv here
+├── data_preprocessed/     # Engineered features will be saved here
+├── models/               # Trained models will be saved here
+├── transformers/         # Pipeline transformers
+├── data_loaders/        # Data loading scripts
+├── templates/           # Web interface templates
+└── pipelines/          # Mage pipeline configurations
 ```
 
-## API Usage
-Example request:
+### 4. Running the Pipeline
+
+#### Option 1: Using Mage UI (Recommended)
+1. Start Mage server:
+```bash
+mage start
+```
+
+2. Access Mage UI:
+- Open http://localhost:6789 in your browser
+- Navigate to car_price_pipeline
+- You'll see 4 blocks:
+  1. Data Loading
+  2. Feature Engineering
+  3. Model Training
+  4. Model Deployment
+- Click "Run Pipeline" to execute all steps
+
+3. Monitor Progress:
+- Watch real-time execution in the UI
+- Check logs for each step
+- View data quality metrics
+
+#### Option 2: Using Terminal
+1. Run individual components:
+```bash
+# Data Loading
+python data_loaders/car_price_data_loader.py
+
+# Feature Engineering
+python transformers/car_price_feature_engineering.py
+
+# Model Training
+python transformers/car_price_model_trainer.py
+
+# Start API Server
+python transformers/car_price_model_deployment.py
+```
+
+### 5. Using the Prediction API
+
+1. After pipeline completion, access:
+- Web Interface: http://localhost:8001
+- API Endpoint: http://localhost:8001/predict
+
+2. Example API request:
 ```python
 import requests
 
@@ -101,23 +116,69 @@ response = requests.post("http://localhost:8001/predict", json=data)
 print(response.json())
 ```
 
-## Development
-- Run tests: `pytest tests/`
-- Format code: `black .`
-- Build Docker image: `docker build -t car-price-prediction .`
+### 6. Directory Usage
 
-## Running with Mage
-1. Start Mage server:
+- `raw_data/`: 
+  - Place the original `Car_Price.csv` here
+  - This data will be used for initial loading
+
+- `data_preprocessed/`:
+  - Contains engineered features
+  - Generated after feature engineering step
+  - File: `engineered_features.csv`
+
+- `models/`:
+  - Stores trained model and artifacts
+  - Generated after model training
+  - Files:
+    - `car_price_model.joblib`: Trained model
+    - `model_metrics.json`: Performance metrics
+    - `feature_importance.csv`: Feature importance analysis
+
+### 7. Development
+
+- Format code:
 ```bash
-mage start
+black .
 ```
 
-2. Access Mage UI:
-- Open http://localhost:6789 in your browser
-- Navigate to car_price_pipeline
-- Click "Run Pipeline" to execute the entire workflow
+- Run tests:
+```bash
+pytest tests/
+```
 
-3. Monitor Pipeline:
-- View real-time execution status
-- Check logs and debugging information
-- Monitor data quality metrics 
+- Build Docker container:
+```bash
+docker build -t car-price-prediction .
+```
+
+### 8. Monitoring and Logs
+
+- Check Mage UI for pipeline status
+- View logs in terminal output
+- Monitor API health: http://localhost:8001/health
+
+## Features
+- Data ingestion and preprocessing
+- Feature engineering
+- Model training with Random Forest
+- Model deployment with FastAPI
+- CI/CD pipeline with GitHub Actions
+- Containerization with Docker
+
+## Troubleshooting
+
+1. If data loading fails:
+   - Verify `Car_Price.csv` is in `raw_data/`
+   - Check file permissions
+   - Ensure correct file encoding (UTF-8)
+
+2. If model training fails:
+   - Check available memory
+   - Verify feature engineering completed
+   - Check engineered_features.csv exists
+
+3. If API fails to start:
+   - Check port 8001 is available
+   - Verify model files exist in models/
+   - Check virtual environment is activated
