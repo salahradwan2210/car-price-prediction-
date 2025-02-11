@@ -4,8 +4,8 @@ env/
 ENV/
 
 # Raw Data and Generated Data
-raw_data/
-data_preprocessed/
+raw_data/*
+data_preprocessed/*
 *.csv
 *.xlsx
 *.xls
@@ -37,10 +37,10 @@ wheels/
 *.egg
 
 # Model files and artifacts
+models/*
 *.joblib
 *.pkl
 *.model
-models/
 wandb/
 mlruns/
 outputs/
@@ -74,6 +74,11 @@ desktop.ini
 .mage_cache/
 __pycache__/
 .pytest_cache/
+
+# Keep empty directories
+!models/.gitkeep
+!raw_data/.gitkeep
+!data_preprocessed/.gitkeep
 
 # Exceptions - Files to keep
 !requirements.txt
