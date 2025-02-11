@@ -1,0 +1,92 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Raw Data and Generated Data
+raw_data/
+data_preprocessed/
+*.csv
+*.xlsx
+*.xls
+*.parquet
+*.feather
+*.h5
+*.hdf5
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Model files and artifacts
+*.joblib
+*.pkl
+*.model
+models/
+wandb/
+mlruns/
+outputs/
+checkpoints/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs and temp files
+*.log
+logs/
+tmp/
+temp/
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+.env.*
+*.env
+
+# System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Mage specific
+.mage_temp/
+.mage_cache/
+__pycache__/
+.pytest_cache/
+
+# Exceptions - Files to keep
+!requirements.txt
+!README.md
+!templates/
+!transformers/
+!data_loaders/
+!pipelines/
+
+# Project specific
+*.env.local
+.coverage
+htmlcov/
+
+# Exceptions
+!car_price_prediction/models/car_price_model.joblib 
