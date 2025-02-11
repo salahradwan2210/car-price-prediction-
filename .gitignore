@@ -80,6 +80,10 @@ __pycache__/
 !raw_data/.gitkeep
 !data_preprocessed/.gitkeep
 
+# Keep images directory
+!images/
+!images/*.png
+
 # Exceptions - Files to keep
 !requirements.txt
 !README.md
